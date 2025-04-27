@@ -21,8 +21,6 @@ public class Company implements Serializable {
     private String adresse;
     private String telephone;
     private String siteWeb;
-    @Column(name = "StatutValidation")
-    private Boolean validation;
 
     @OneToOne
     @JoinColumn(name = "user_id")

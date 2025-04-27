@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ComapnyService implements ICompanyService{
+public class CompanyService implements ICompanyService{
     @Autowired
     CompanyRepository companyRepository;
 

@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/category")
+@RequestMapping("/admin/category")
 public class CategoryController {
+
     @Autowired
     private CategoryService categoryService;
 
@@ -30,7 +31,7 @@ public class CategoryController {
     public String AddCategory(@ModelAttribute Category category, RedirectAttributes redirectAttributes) {
         categoryService.addCategory(category);
         redirectAttributes.addFlashAttribute("message", "Category added successfully");
-        return "redirect:/category/retrieve-all-categories";
+        return "redirect:/admin/category/retrieve-all-categories";
     }
 
     @GetMapping("/update")
@@ -44,13 +45,13 @@ public class CategoryController {
     public String updateCategory(@ModelAttribute Category category, RedirectAttributes redirectAttributes) {
         categoryService.updateCategory(category.getId(), category);
         redirectAttributes.addFlashAttribute("message", "Category updated successfully");
-        return "redirect:/category/retrieve-all-categories";
+        return "redirect:/admin/category/retrieve-all-categories";
     }
 
     @GetMapping("/delete")
     public  String deleteCategory(@RequestParam("id") Long id, RedirectAttributes redirectAttributes) {
         categoryService.deleteCategory(id);
         redirectAttributes.addFlashAttribute("message", "Category deleted successfully");
-        return "redirect:/category/retrieve-all-categories";
+        return "redirect:/admin/category/retrieve-all-categories";
     }
 }

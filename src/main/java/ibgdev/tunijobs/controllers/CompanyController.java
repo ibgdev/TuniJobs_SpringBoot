@@ -1,6 +1,5 @@
 package ibgdev.tunijobs.controllers;
 
-import ibgdev.tunijobs.entity.Category;
 import ibgdev.tunijobs.entity.Company;
 import ibgdev.tunijobs.services.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/company")
+@RequestMapping("/admin/company")
 public class CompanyController {
     @Autowired
     private CompanyService comapnyService;
@@ -31,7 +30,7 @@ public class CompanyController {
     public String addCompany(@ModelAttribute Company company, RedirectAttributes redirectAttributes) {
         comapnyService.addCompany(company);
         redirectAttributes.addFlashAttribute("message", "Company added successfully");
-        return "redirect:/company/retrieve-all-companies";
+        return "redirect:/admin/company/retrieve-all-companies";
     }
 
     @GetMapping("/update")
@@ -45,13 +44,13 @@ public class CompanyController {
     public String updateCategory(@ModelAttribute Company company, RedirectAttributes redirectAttributes) {
         comapnyService.updateCompany(company.getId(), company);
         redirectAttributes.addFlashAttribute("message", "Company updated successfully");
-        return "redirect:/company/retrieve-all-companies";
+        return "redirect:/admin/company/retrieve-all-companies";
     }
 
     @GetMapping("/delete")
     public String deleteCompany(@RequestParam("id") Long id, RedirectAttributes redirectAttributes) {
         comapnyService.DeleteCompany(id);
         redirectAttributes.addFlashAttribute("message", "Company deleted successfully");
-        return "redirect:/company/retrieve-all-companies";
+        return "redirect:/admin/company/retrieve-all-companies";
     }
 }

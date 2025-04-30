@@ -41,7 +41,6 @@ public class UserService implements IUserService{
             u.setEmail(e.getEmail());
             u.setPassword(e.getPassword());
             u.setRole(e.getRole());
-            u.setEstActif(e.isEstActif());
             u.setCreatedAt(e.getCreatedAt());
             u.setReviews(e.getReviews());
             u.setApplications(e.getApplications());

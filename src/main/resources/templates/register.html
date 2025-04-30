@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Create Account</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{css/register.css}">
+</head>
+<body>
+<a href="/" class="back-arrow">
+    <i class="fas fa-arrow-left"></i>
+</a>
+<ul class="bg-shapes">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+
+<div class="register-container">
+    <div class="register-header">
+        <h2>Create Account</h2>
+        <p>Join us today and start your journey</p>
+    </div>
+
+    <form th:action="@{/register}" th:object="${user}" method="post">
+        <div class="form-group">
+            <label for="nom">Full Name</label>
+            <div class="input-wrapper">
+                <i class="fas fa-user icon"></i>
+                <input type="text" id="nom" th:field="*{nom}" placeholder="John Doe" required />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <div class="input-wrapper">
+                <i class="fas fa-envelope icon"></i>
+                <input type="email" id="email" th:field="*{email}" placeholder="you@example.com" required />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-wrapper">
+                <i class="fas fa-lock icon"></i>
+                <input type="password" id="password" th:field="*{password}" placeholder="••••••••" required />
+                <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+            </div>
+            <div class="password-strength">
+                <div class="strength-meter" id="strengthMeter"></div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn-register">
+            Sign Up <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
+        </button>
+
+        <div th:if="${param.error}" class="message error-message">
+            <i class="fas fa-exclamation-circle"></i> Email already exists. Please use a different email.
+        </div>
+
+        <div class="footer-links">
+            Already have an account? <a href="/login">Sign in</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Password strength indicator
+    const passwordInput = document.getElementById('password');
+    const strengthMeter = document.getElementById('strengthMeter');
+
+    passwordInput.addEventListener('input', function() {
+        const strength = calculatePasswordStrength(this.value);
+        updateStrengthMeter(strength);
+    });
+
+    function calculatePasswordStrength(password) {
+        let strength = 0;
+
+        // Length check
+        if (password.length >= 8) strength += 1;
+        if (password.length >= 12) strength += 1;
+
+        // Character variety checks
+        if (/[A-Z]/.test(password)) strength += 1; // Uppercase
+        if (/[0-9]/.test(password)) strength += 1; // Numbers
+        if (/[^A-Za-z0-9]/.test(password)) strength += 1; // Special chars
+
+        return Math.min(strength, 5); // Cap at 5
+    }
+
+    function updateStrengthMeter(strength) {
+        const colors = [
+            '#d63031', // Red (weak)
+            '#e17055', // Orange
+            '#fdcb6e', // Yellow
+            '#00b894', // Green (good)
+            '#00b894'  // Dark green (strong)
+        ];
+
+        const width = (strength / 5) * 100;
+        strengthMeter.style.width = `${width}%`;
+        strengthMeter.style.background = colors[strength - 1] || colors[0];
+    }
+
+    // Password visibility toggle
+    const togglePassword = document.getElementById('togglePassword');
+
+    togglePassword.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+    });
+
+    // Floating label effect
+    const inputs = document.querySelectorAll('input');
+
+    inputs.forEach(input => {
+        input.addEventListener('focus', () => {
+            const label = input.parentElement.parentElement.querySelector('label');
+            label.style.color = 'var(--primary-color)';
+            label.style.transform = 'translateY(-5px)';
+            label.style.fontSize = '0.85rem';
+        });
+
+        input.addEventListener('blur', () => {
+            const label = input.parentElement.parentElement.querySelector('label');
+            if (!input.value) {
+                label.style.color = 'var(--text-color)';
+                label.style.transform = 'translateY(0)';
+                label.style.fontSize = '0.95rem';
+            }
+        });
+    });
+
+    // Ripple effect for register button
+    const registerBtn = document.querySelector('.btn-register');
+
+    registerBtn.addEventListener('click', function(e) {
+        // Remove any existing ripples
+        const existingRipples = document.querySelectorAll('.ripple');
+        existingRipples.forEach(ripple => ripple.remove());
+
+        // Create new ripple
+        const ripple = document.createElement('span');
+        ripple.classList.add('ripple');
+
+        // Position the ripple
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        ripple.style.left = `${x}px`;
+        ripple.style.top = `${y}px`;
+
+        this.appendChild(ripple);
+
+        // Remove ripple after animation
+        setTimeout(() => {
+            ripple.remove();
+        }, 1000);
+    });
+</script>
+</body>
+</html>

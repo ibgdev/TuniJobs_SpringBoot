@@ -94,6 +94,16 @@
     transition: all 0.3s ease;
 }
 
+.btn-logout {
+    background-color: red ;
+    color: white;
+}
+
+.btn-logout:hover {
+    background-color: #780000;
+    color: white;
+}
+
 .btn-login {
     background-color: transparent;
     color: var(--primary-color);

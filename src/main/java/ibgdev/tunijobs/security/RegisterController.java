@@ -5,6 +5,8 @@ import ibgdev.tunijobs.entity.Roles;
 import ibgdev.tunijobs.entity.User;
 import ibgdev.tunijobs.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +26,14 @@ public class RegisterController {
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.isAuthenticated() && !(auth.getPrincipal().equals("anonymousUser"))) {
+            if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+                return "redirect:/admin";
+            } else {
+                return "redirect:/";
+            }
+        }
         model.addAttribute("user", new RegistrationDto());
         return "register";
     }
@@ -37,7 +47,6 @@ public class RegisterController {
         user.setNom(dto.getNom());
         user.setEmail(dto.getEmail());
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
-        System.out.println("Registering: " + dto.getEmail() + ", role: " + dto.getRole());
         user.setRole(Roles.valueOf(dto.getRole()));
         user.setCreatedAt(new Date());
 

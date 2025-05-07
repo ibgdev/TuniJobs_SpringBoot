@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,24 +14,48 @@
 <!-- Navigation Bar -->
 <nav class="navbar">
     <div class="container">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" th:href="@{/}">
             <i class="fas fa-cubes"></i> TuniJobs
         </a>
         <div class="nav-links">
-            <a href="#" class="nav-link active">Home</a>
+            <a href="/" class="nav-link active">Home</a>
             <a href="#" class="nav-link">Jobs</a>
             <a href="#" class="nav-link">Companies</a>
-            <a href="#" class="nav-link">About</a>
-            <div class="auth-buttons">
+            <a href="/become-a-company" class="nav-link">Become a company</a>
+
+            <!-- Show when NOT logged in -->
+            <div sec:authorize="isAnonymous()" class="auth-buttons">
                 <a th:href="@{/login}" class="btn btn-login">Login</a>
                 <a th:href="@{/register}" class="btn btn-register">Register</a>
             </div>
-        </div>
+
+            <!-- Show when LOGGED IN -->
+            <div sec:authorize="isAuthenticated()" class="dropdown auth-buttons">
+                <button class="btn btn-login dropdown-toggle" type="button" id="accountDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-user"></i> <span sec:authentication="name"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
+                    <li>
+                        <a class="dropdown-item" th:href="@{/profile}">
+                            <i class="fas fa-id-badge me-2"></i> My Profile
+                        </a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <a class="dropdown-item" th:href="@{/logout}">
+                            <i class="fas fa-sign-out-alt me-2"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
         <button class="hamburger">
             <i class="fas fa-bars"></i>
         </button>
     </div>
+    </div>
 </nav>
+
 
 <!-- Hero Section -->
 <section class="hero">
@@ -41,7 +66,7 @@
             <div class="search-box">
                 <input type="text" placeholder="Job title, keywords...">
                 <input type="text" placeholder="Location">
-                <button class="btn-search">Search Jobs</button>
+                <button class="btn-search"><i class="fas fa-search"></i></button>
             </div>
         </div>
         <div class="hero-image">

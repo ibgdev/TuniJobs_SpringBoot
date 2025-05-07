@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Become a copany</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{css/navStyle.css}">
+    <link rel="stylesheet" th:href="@{css/devenir.css}">
+
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/}">
+            <i class="fas fa-cubes"></i> TuniJobs
+        </a>
+        <div class="nav-links">
+            <a href="/" class="nav-link">Home</a>
+            <a href="#" class="nav-link">Jobs</a>
+            <a href="#" class="nav-link ">Companies</a>
+            <a href="/become-a-company" class="nav-link active">Become a company</a>
+
+            <!-- Show when NOT logged in -->
+            <div sec:authorize="isAnonymous()" class="auth-buttons">
+                <a th:href="@{/login}" class="btn btn-login">Login</a>
+                <a th:href="@{/register}" class="btn btn-register">Register</a>
+            </div>
+
+            <!-- Show when LOGGED IN -->
+            <div sec:authorize="isAuthenticated()" class="dropdown auth-buttons">
+                <button class="btn btn-login dropdown-toggle" type="button" id="accountDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-user"></i> <span sec:authentication="name"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
+                    <li>
+                        <a class="dropdown-item" th:href="@{/profile}">
+                            <i class="fas fa-id-badge me-2"></i> My Profile
+                        </a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <a class="dropdown-item" th:href="@{/logout}">
+                            <i class="fas fa-sign-out-alt me-2"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <button class="hamburger">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<section class="become-company-wrapper">
+    <div class="become-company-container">
+        <h1 class="become-company-title">Become a Partner Company</h1>
+        <p class="become-company-intro">
+            Would you like to post your job offers on <strong>TuniJobs</strong>? Join our network by becoming a partner company.
+        </p>
+
+        <div class="become-company-instructions">
+            <h2 class="become-company-subtitle">Steps to follow:</h2>
+            <p>To request the creation of a company account, please send an email to the following address:</p>
+            <a class="become-company-email" href="mailto:support-team@tunijobs.tn"><strong>support-team@tunijobs.tn</strong></a>
+
+            <p>The email must include the following information:</p>
+            <ul class="become-company-details">
+                <li><strong>Company name</strong></li>
+                <li><strong>Tax Identification Number</strong></li>
+                <li><strong>Industry sector</strong></li>
+                <li><strong>Full address</strong></li>
+                <li><strong>Website</strong></li>
+                <li><strong>Phone number</strong></li>
+                <li><strong>Manager's email</strong> (the manager must have an active candidate account on the platform)</li>
+                <li><strong>Logo URL</strong> or the <strong>logo as an attachment</strong></li>
+            </ul>
+
+            <p class="become-company-note">Our team will contact you once your request has been reviewed.</p>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

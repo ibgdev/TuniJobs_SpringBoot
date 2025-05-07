@@ -30,9 +30,6 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("/become-a-company")
-    public String becomeCompany(Model model) {
-        return "becomeAcompany";
-    }
+
 
 }

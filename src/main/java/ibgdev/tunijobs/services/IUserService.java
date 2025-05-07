@@ -1,5 +1,6 @@
 package ibgdev.tunijobs.services;
 
+import ibgdev.tunijobs.entity.Roles;
 import ibgdev.tunijobs.entity.User;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface IUserService {
     public void DeleteUser(Long id);
 
     public User updateUser(Long id , User e);
+
+    public List<User> FindUserByRole(Roles role);
 }

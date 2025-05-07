@@ -6,9 +6,89 @@
     <title>Become a copany</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" th:href="@{css/navStyle.css}">
-    <link rel="stylesheet" th:href="@{css/devenir.css}">
+    <link rel="stylesheet" href="/css/navStyle.css">
+    <link rel="stylesheet" th:href="@{/css/devenir.css}">
 
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --text-color: #2b2d42;
+            --text-light: #8d99ae;
+            --background-light: #f8f9fa;
+            --white: #ffffff;
+            --error-color: #ef233c;
+            --success-color: #4cc9f0;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .become-company-wrapper {
+            padding: 8rem 2rem;
+            background-color: var(--background-light);
+        }
+
+        .become-company-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .become-company-title {
+            font-size: 2rem;
+            color: var(--primary-dark);
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .become-company-intro {
+            font-size: 1.1rem;
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .become-company-instructions {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+        }
+
+        .become-company-subtitle {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .become-company-email {
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .become-company-email:hover {
+            text-decoration: underline;
+        }
+
+        .become-company-details {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+
+        .become-company-note {
+            font-style: italic;
+            color: var(--text-light);
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+    </style>
 </head>
 <body>
 
@@ -20,8 +100,8 @@
         <div class="nav-links">
             <a href="/" class="nav-link">Home</a>
             <a href="#" class="nav-link">Jobs</a>
-            <a href="#" class="nav-link ">Companies</a>
-            <a href="/become-a-company" class="nav-link active">Become a company</a>
+            <a th:href="@{/condidate/companies}" class="nav-link ">Companies</a>
+            <a th:href="@{/become-a-company}" class="nav-link active">Become a company</a>
 
             <!-- Show when NOT logged in -->
             <div sec:authorize="isAnonymous()" class="auth-buttons">

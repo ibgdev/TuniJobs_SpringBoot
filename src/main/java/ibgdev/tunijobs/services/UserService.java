@@ -1,5 +1,6 @@
 package ibgdev.tunijobs.services;
 
+import ibgdev.tunijobs.entity.Roles;
 import ibgdev.tunijobs.entity.User;
 import ibgdev.tunijobs.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,4 +49,10 @@ public class UserService implements IUserService{
         }
         return null;
     }
+
+    @Override
+    public List<User> FindUserByRole(Roles role) {
+        return userRepository.findUserByRole(role);
+    }
+
 }

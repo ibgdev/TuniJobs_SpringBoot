@@ -20,8 +20,8 @@
         <div class="nav-links">
             <a href="/" class="nav-link active">Home</a>
             <a href="#" class="nav-link">Jobs</a>
-            <a href="#" class="nav-link">Companies</a>
-            <a href="/become-a-company" class="nav-link">Become a company</a>
+            <a href="/condidate/companies" class="nav-link">Companies</a>
+            <a th:href="@{/become-a-company}" class="nav-link">Become a company</a>
 
             <!-- Show when NOT logged in -->
             <div sec:authorize="isAnonymous()" class="auth-buttons">

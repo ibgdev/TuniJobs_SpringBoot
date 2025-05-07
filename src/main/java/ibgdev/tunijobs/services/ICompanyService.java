@@ -13,4 +13,6 @@ public interface ICompanyService {
     public void DeleteCompany(Long id);
 
     public Company updateCompany(Long id , Company e);
+
+    void assignResponsible(Long companyId, Long userId);
 }

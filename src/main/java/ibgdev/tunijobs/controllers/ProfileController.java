@@ -20,4 +20,9 @@ public class ProfileController {
         model.addAttribute("user", user);
         return "/profile";
     }
+
+    @GetMapping("/become-a-company")
+    public String becomeCompany(Model model) {
+        return "becomeAcompany";
+    }
 }

@@ -16,11 +16,12 @@ public class Company implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nom;
-    private String matriquleFiscale;
+    private String matriculeFiscale;
     private String secteur;
     private String adresse;
     private String telephone;
     private String siteWeb;
+    private String logoUrl;
 
     @OneToOne
     @JoinColumn(name = "user_id")

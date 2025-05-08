@@ -70,4 +70,10 @@ public class CompanyService implements ICompanyService{
             userRepository.save(user);
         }
     }
+
+    @Override
+    public Company findCompanyByResponsable(User user) {
+        return companyRepository.findCompanyByResponsable(user);
+    }
+
 }

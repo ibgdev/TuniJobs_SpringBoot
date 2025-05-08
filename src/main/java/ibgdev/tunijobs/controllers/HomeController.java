@@ -14,7 +14,9 @@ public class HomeController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
             return "redirect:/admin";
-        } else {
+        } else if(auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ENTERPRISE"))){
+            return "redirect:/enterprise";
+        }else {
             return "redirect:/";
         }
     }
@@ -25,6 +27,11 @@ public class HomeController {
         if (auth != null && auth.isAuthenticated()
                 && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
             return "redirect:/admin";
+        }
+
+        if (auth != null && auth.isAuthenticated()
+                && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ENTERPRISE"))) {
+            return "redirect:/entreprise";
         }
 
         return "index";

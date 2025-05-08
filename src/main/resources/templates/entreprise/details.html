@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{css/navStyle.css}">
+    <style>
+        /* Company Dashboard Styles */
+        .containerr{
+            margin:3% 10% 5% 10%;
+        }
+        .company-dashboard {
+            padding: 40px 0;
+            background-color: #f8f9fa;
+            min-height: calc(100vh - 76px);
+        }
+
+        .company-header {
+            background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .company-title {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .company-logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .company-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .company-logo-placeholder {
+            font-size: 40px;
+            color: #4b6cb7;
+        }
+
+        .company-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-card i {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .stat-card h3 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .stat-card p {
+            margin: 0;
+            opacity: 0.8;
+        }
+
+        .company-info-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .company-info-card h3 {
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .company-info-card h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: #4b6cb7;
+        }
+
+        .info-item {
+            display: flex;
+            margin-bottom: 15px;
+            align-items: flex-start;
+        }
+
+        .info-icon {
+            margin-right: 15px;
+            width: 40px;
+            height: 40px;
+            background-color: #e9ecef;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4b6cb7;
+            flex-shrink: 0;
+        }
+
+        .info-text {
+            flex-grow: 1;
+        }
+
+        .info-text h5 {
+            margin: 0;
+            font-size: 16px;
+            color: #6c757d;
+        }
+
+        .info-text p {
+            margin: 0;
+            font-size: 18px;
+            color: #212529;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-wrap:wrap ;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            padding: 10px 20px;
+            text-decoration: none;
+            height: 30%;
+            width: 100%;
+            border-radius: 6px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-custom {
+            background: #4b6cb7;
+            color: white;
+            border: none;
+        }
+
+        .btn-primary-custom:hover {
+            background: #3a5795;
+        }
+
+        .btn-outline-custom {
+            background: transparent;
+            color: #4b6cb7;
+            border: 1px solid #4b6cb7;
+        }
+
+        .btn-outline-custom:hover {
+            background: rgba(75, 108, 183, 0.1);
+        }
+
+        .btn-danger-custom {
+            background: #dc3545;
+            color: white;
+            border: none;
+        }
+
+        .btn-danger-custom:hover {
+            background: #b02a37;
+        }
+
+        @media (max-width: 768px) {
+            .company-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .company-title {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar">
+    <div class="container">
+        <a sec:authorize="isAuthenticated()" class="navbar-brand" th:href="@{/}">
+            <i class="fas fa-cubes"></i> TuniJobs</span>
+        </a>
+        <div class="nav-links">
+            <a href="/" class="nav-link active">Dashboard</a>
+            <a href="#" class="nav-link">My JobOffers</a>
+            <a href="#" class="nav-link">Applications</a>
+
+
+            <!-- Show when NOT logged in -->
+            <div sec:authorize="isAnonymous()" class="auth-buttons">
+                <a th:href="@{/login}" class="btn btn-login">Login</a>
+                <a th:href="@{/register}" class="btn btn-register">Register</a>
+            </div>
+
+            <!-- Show when LOGGED IN -->
+            <div sec:authorize="isAuthenticated()" class="dropdown auth-buttons">
+                <button class="btn btn-login dropdown-toggle" type="button" id="accountDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-user"></i> <span sec:authentication="name"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
+                    <li>
+                        <a class="dropdown-item" th:href="@{/profile}">
+                            <i class="fas fa-id-badge me-2"></i> My Profile
+                        </a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <a class="dropdown-item" th:href="@{/logout}">
+                            <i class="fas fa-sign-out-alt me-2"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <button class="hamburger">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Company Dashboard Section - Shown only when logged in as a company user -->
+<section class="company-dashboard">
+    <div class="containerr">
+        <div class="company-header">
+            <div class="company-title">
+                <div class="company-logo">
+                    <img th:if="${company.logoUrl != null && !company.logoUrl.isEmpty()}"
+                         th:src="${company.logoUrl}" alt="Company Logo">
+                    <div th:unless="${company.logoUrl != null && !company.logoUrl.isEmpty()}" class="company-logo-placeholder">
+                        <i class="fas fa-building"></i>
+                    </div>
+                </div>
+                <div>
+                    <h1 th:text="${company.nom}">Company Name</h1>
+                    <p th:text="${company.secteur}">Company Sector</p>
+                </div>
+            </div>
+
+            <div class="company-stats">
+                <div class="stat-card">
+                    <i class="fas fa-briefcase"></i>
+                    <h3 th:text="${company.Joboffers != null ? company.Joboffers.size() : 0}">0</h3>
+                    <p>Active Job Offers</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-file-alt"></i>
+                    <h3>0</h3>
+                    <p>Applications Received</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-users"></i>
+                    <h3>0</h3>
+                    <p>Candidates Hired</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="company-info-card">
+                    <h3>Company Information</h3>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-id-card"></i>
+                        </div>
+                        <div class="info-text">
+                            <h5>Registration Number</h5>
+                            <p th:text="${company.matriculeFiscale}">123456789</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="info-text">
+                            <h5>Address</h5>
+                            <p th:text="${company.adresse}">123 Company Street, City, Country</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="info-text">
+                            <h5>Phone Number</h5>
+                            <p th:text="${company.telephone}">+216 12 345 678</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="info-text">
+                            <h5>Website</h5>
+                            <p th:if="${company.siteWeb != null && !company.siteWeb.isEmpty()}">
+                                <a th:href="${company.siteWeb}" target="_blank" th:text="${company.siteWeb}">www.company.com</a>
+                            </p>
+                            <p th:unless="${company.siteWeb != null && !company.siteWeb.isEmpty()}">Not available</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="info-text">
+                            <h5>Company Representative</h5>
+                            <p th:text="${company.responsable != null ? company.responsable.nom : 'Not assigned'}">John Doe</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+
+                <div class="company-info-card mt-4">
+                    <h3>Quick Actions</h3>
+
+                    <div class="action-buttons">
+                        <a th:href="@{/company/new-job}" class="action-btn btn-primary-custom w-100 mb-3">
+                            <i class="fas fa-plus-circle"></i> Create New Job Offer
+                        </a>
+                        <a th:href="@{/company/manage-jobs}" class="action-btn btn-outline-custom w-100 mb-3">
+                            <i class="fas fa-briefcase"></i> Manage Jobs
+                        </a>
+                        <a th:href="@{/company/applications}" class="action-btn btn-outline-custom w-100 mb-3">
+                            <i class="fas fa-clipboard-list"></i> View Applications
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

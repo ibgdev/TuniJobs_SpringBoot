@@ -40,7 +40,7 @@
     <div class="d-flex justify-content-between align-items-center">
         <h3>Users List</h3>
         <!--th:href="@{/admin/user/add}"-->
-        <a  class="btn btn-primary">
+        <a  class="btn btn-primary" th:href="@{/admin/user/add}">
             <i class="fas fa-plus-circle me-2"></i>Add new User
         </a>
     </div>
@@ -70,7 +70,7 @@
                     <td th:text="${user.role}"></td>
                     <td>
                         <!--th:href="@{/admin/category/update(id=${user.id})}"-->
-                        <a  class="btn btn-info btn-sm me-2">
+                        <a  class="btn btn-info btn-sm me-2" th:href="@{/admin/user/update(id=${user.id})}">
                             <i class="fas fa-edit me-1"></i>Update
                         </a>
                         <a th:href="@{/admin/user/delete(id=${user.id})}"  class="btn btn-danger btn-sm"

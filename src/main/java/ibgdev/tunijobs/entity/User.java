@@ -25,7 +25,7 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private Roles role;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")

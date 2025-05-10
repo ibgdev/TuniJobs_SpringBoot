@@ -1,5 +1,6 @@
 package ibgdev.tunijobs.services;
 
+import ibgdev.tunijobs.entity.Company;
 import ibgdev.tunijobs.entity.JobOffer;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface IJobofferService {
     public void DeleteJobOffer(Long id);
 
     public JobOffer updateJobOffer(Long id , JobOffer e);
+
+    public List<JobOffer> findJobOffersByEntreprise(Company comapny);
 }

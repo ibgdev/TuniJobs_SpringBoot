@@ -1,5 +1,6 @@
 package ibgdev.tunijobs.services;
 
+import ibgdev.tunijobs.entity.Company;
 import ibgdev.tunijobs.entity.JobOffer;
 import ibgdev.tunijobs.repository.JobOfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,12 +41,17 @@ public class JobOfferService implements IJobofferService{
             j.setTitre(e.getTitre());
             j.setDescription(e.getDescription());
             j.setSalaire(e.getSalaire());
-            j.setDatePublication(e.getDatePublication());
-            j.setEntreprise(e.getEntreprise());
-            j.setCategory(e.getCategory());
-            j.setApplications(e.getApplications());
+            j.setLocation(e.getLocation());
             return jobOfferRepository.save(j);
         }
         return null;
     }
+
+    @Override
+    public List<JobOffer> findJobOffersByEntreprise(Company company) {
+        return  jobOfferRepository.findJobOffersByEntrepriseOrderByDatePublicationDesc(company);
+
+    }
+
+
 }

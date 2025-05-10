@@ -20,6 +20,7 @@ public class JobOffer implements Serializable {
     private Long id;
     private String titre;
     private String description;
+    private Locations location;
     private Double salaire;
     @Temporal(TemporalType.DATE)
     private Date datePublication;

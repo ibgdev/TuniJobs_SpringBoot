@@ -15,7 +15,7 @@ public class HomeController {
         if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
             return "redirect:/admin";
         } else if(auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ENTERPRISE"))){
-            return "redirect:/enterprise";
+            return "redirect:/entreprise/details";
         }else {
             return "redirect:/";
         }
@@ -31,7 +31,7 @@ public class HomeController {
 
         if (auth != null && auth.isAuthenticated()
                 && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ENTERPRISE"))) {
-            return "redirect:/entreprise";
+            return "redirect:/entreprise/details";
         }
 
         return "index";

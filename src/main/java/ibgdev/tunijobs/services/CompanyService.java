@@ -53,6 +53,7 @@ public class CompanyService implements ICompanyService{
             c.setResponsable(e.getResponsable());
             c.setJoboffers(e.getJoboffers());
             c.setReviews(e.getReviews());
+            c.setLogoUrl(e.getLogoUrl());
             return companyRepository.save(c);
         }
         return null;

@@ -19,6 +19,8 @@ public class JobOffer implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String titre;
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String description;
     private Locations location;
     private Double salaire;

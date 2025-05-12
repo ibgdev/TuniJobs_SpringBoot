@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${company.nom} + ' - Company Details'">Company Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+    <link rel="stylesheet" th:href="@{/css/navStyle.css}">
+    <style>
+        /* Modern Color Palette */
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --primary-light: #eef0fd;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --success: #0ead69;
+            --success-light: #e6f7ef;
+            --warning: #ff9e00;
+            --danger: #ef476f;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --gray-light: #e9ecef;
+            --white: #ffffff;
+
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --border-radius: 12px;
+            --border-radius-lg: 20px;
+        }
+
+        /* Base Styles */
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+        }
+
+        .container-details {
+            max-width: 1400px;
+            margin: 8rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Company Header */
+        .company-header {
+            background: var(--white);
+            border-radius: var(--border-radius-lg);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 3rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 2rem;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .company-logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex: 0 0 200px;
+            max-width: 200px;
+        }
+
+        .company-logo {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+        }
+
+        .company-header-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .company-info {
+            margin-bottom: 1.5rem;
+        }
+
+        .company-info h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            letter-spacing: -0.5px;
+        }
+
+        .company-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1rem;
+        }
+
+        .company-meta-item {
+            background-color: var(--primary-light);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: var(--transition);
+        }
+
+        .company-meta-item i {
+            color: var(--primary);
+            font-size: 1.5rem;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .company-meta-item:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .company-meta-item .meta-details {
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        .company-meta-item .meta-label {
+            font-size: 0.85rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .company-meta-item .meta-value {
+            font-weight: 600;
+            color: var(--dark);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Job Offers Section */
+        .job-offers-section {
+            background: var(--white);
+            border-radius: var(--border-radius-lg);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-sm);
+            animation: fadeInUp 0.6s ease-out 0.2s forwards;
+            opacity: 0;
+        }
+
+        .job-offers-section h4 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.75rem;
+        }
+
+        .job-offers-section h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 3px;
+        }
+
+        .job-offer-item {
+            transition: var(--transition);
+            border: 1px solid var(--gray-light) !important;
+        }
+
+        .job-offer-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md) !important;
+            border-color: var(--primary-light) !important;
+        }
+
+        .job-offer-item h5 {
+            color: var(--primary-dark);
+            font-weight: 700;
+        }
+
+        .job-offer-item small {
+            color: var(--gray);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            background: var(--primary-light);
+            border-radius: var(--border-radius-lg);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .empty-state p {
+            color: var(--gray);
+            font-size: 1.25rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .company-header {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem 1rem;
+            }
+
+            .company-logo-container {
+                flex: 0 0 150px;
+                max-width: 150px;
+                margin-bottom: 1.5rem;
+            }
+
+            .company-logo {
+                width: 150px;
+                height: 150px;
+            }
+
+            .company-header-content {
+                width: 100%;
+            }
+
+            .company-meta {
+                grid-template-columns: 1fr;
+            }
+
+            .company-info h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container-details {
+                margin: 2rem auto;
+                padding: 0 0.5rem;
+            }
+
+            .company-header {
+                padding: 1.5rem 0.5rem;
+            }
+
+            .company-logo-container {
+                flex: 0 0 120px;
+                max-width: 120px;
+            }
+
+            .company-logo {
+                width: 120px;
+                height: 120px;
+            }
+
+            .company-info h2 {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/}">
+            <img th:src="@{/images/tunijobs logo.png}" alt="" style="width: 150px;">
+        </a>
+        <div class="nav-links">
+            <a href="/" class="nav-link">Home</a>
+            <a th:href="@{/condidate/joboffers}" class="nav-link">Jobs</a>
+            <a th:href="@{/condidate/companies}" class="nav-link active">Companies</a>
+            <a th:href="@{/become-a-company}" class="nav-link">Become a company</a>
+
+            <!-- Show when NOT logged in -->
+            <div sec:authorize="isAnonymous()" class="auth-buttons">
+                <a th:href="@{/login}" class="btn btn-login">Login</a>
+                <a th:href="@{/register}" class="btn btn-register">Register</a>
+            </div>
+
+            <!-- Show when LOGGED IN -->
+            <div sec:authorize="isAuthenticated()" class="dropdown auth-buttons">
+                <button class="btn btn-login dropdown-toggle" type="button" id="accountDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-user"></i> <span sec:authentication="name"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
+                    <li>
+                        <a class="dropdown-item" th:href="@{/profile}">
+                            <i class="fas fa-id-badge me-2"></i> My Profile
+                        </a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <a class="dropdown-item" th:href="@{/logout}">
+                            <i class="fas fa-sign-out-alt me-2"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <button class="hamburger">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="container-details">
+    <!-- Company Details -->
+    <div class="company-header">
+        <div class="company-logo-container">
+            <img th:src="@{${company.logoUrl}}" alt="Company Logo" class="company-logo">
+        </div>
+        <div class="company-header-content">
+            <div class="company-info">
+                <h2 th:text="${company.nom}">Company Name</h2>
+            </div>
+            <div class="company-meta">
+                <div class="company-meta-item">
+                    <i class="fas fa-id-card"></i>
+                    <div class="meta-details">
+                        <div class="meta-label">Matricule Fiscale</div>
+                        <div class="meta-value" th:text="${company.matriculeFiscale}">MF123456</div>
+                    </div>
+                </div>
+
+                <div class="company-meta-item">
+                    <i class="fas fa-industry"></i>
+                    <div class="meta-details">
+                        <div class="meta-label">Secteur</div>
+                        <div class="meta-value" th:text="${company.secteur}">Technology</div>
+                    </div>
+                </div>
+
+                <div class="company-meta-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div class="meta-details">
+                        <div class="meta-label">Adresse</div>
+                        <div class="meta-value" th:text="${company.adresse}" th:title="${company.adresse}">123 Rue Exemple</div>
+                    </div>
+                </div>
+
+                <div class="company-meta-item">
+                    <i class="fas fa-phone"></i>
+                    <div class="meta-details">
+                        <div class="meta-label">Téléphone</div>
+                        <div class="meta-value" th:text="${company.telephone}">+216 12 345 678</div>
+                    </div>
+                </div>
+
+                <div class="company-meta-item">
+                    <i class="fas fa-globe"></i>
+                    <div class="meta-details">
+                        <div class="meta-label">Site Web</div>
+                        <div class="meta-value">
+                            <a th:href="${company.siteWeb}" th:text="${company.siteWeb}" class="text-decoration-none" target="_blank">https://example.com</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Job Offers Section -->
+    <div class="job-offers-section">
+        <h4>Job Offers</h4>
+
+        <div th:if="${#lists.isEmpty(joboffers)}" class="empty-state">
+            <i class="fas fa-briefcase"></i>
+            <p>No job offers available for this company at the moment.</p>
+        </div>
+
+        <div class="list-group" th:if="${!#lists.isEmpty(joboffers)}">
+            <a th:each="offer : ${joboffers}"
+               th:href="@{'/condidate/joboffers/details/' + ${offer.id}}"
+               class="list-group-item list-group-item-action mb-2 job-offer-item">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 th:text="${offer.titre}" class="mb-1">Offer Title</h5>
+                    <small th:text="${#dates.format(offer.datePublication, 'dd-MM-yyyy')}">Date</small>
+                </div>
+                <p th:text="${offer.description}" class="mb-1">Short description of the job offer...</p>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

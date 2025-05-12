@@ -45,7 +45,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/","/condidate/companies","/login", "/register", "/css/**", "/js/**", "/become-a-company", "/images/**").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")  // Only ADMINs can access /admin/**
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/entreprise/**").hasRole("ENTERPRISE")// Only ADMINs can access /admin/**
                         .anyRequest().authenticated()
 
                 )

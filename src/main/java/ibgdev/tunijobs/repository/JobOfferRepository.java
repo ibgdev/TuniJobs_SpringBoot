@@ -11,4 +11,6 @@ import java.util.List;
 public interface JobOfferRepository extends JpaRepository<JobOffer, Long> {
     public JobOffer findJobOfferById(Long idjoboffer);
     public List<JobOffer> findJobOffersByEntrepriseOrderByDatePublicationDesc(Company company);
+    public List<JobOffer> findAllByOrderByDatePublicationDesc();
+
 }

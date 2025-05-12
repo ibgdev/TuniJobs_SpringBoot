@@ -15,7 +15,7 @@ public class JobOfferService implements IJobofferService{
 
     @Override
     public List<JobOffer> findAll() {
-        return jobOfferRepository.findAll();
+        return jobOfferRepository.findAllByOrderByDatePublicationDesc();
     }
 
     @Override

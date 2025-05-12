@@ -150,10 +150,14 @@
       <img th:src="@{/images/tunijobs logo.png}" alt="" style="width: 150px;">
     </a>
     <div class="nav-links">
-      <a href="/" class="nav-link">Home</a>
-      <a th:href="@{/condidate/joboffers}" class="nav-link">Jobs</a>
-      <a th:href="@{/condidate/companies}" class="nav-link">Companies</a>
-      <a th:href="@{/become-a-company}" class="nav-link">Become a company</a>
+      <a href="/" class="nav-link" sec:authorize="hasRole('CANDIDATE')" >Home</a>
+      <a th:href="@{/condidate/joboffers}"  sec:authorize="hasRole('CANDIDATE')" class="nav-link">Jobs</a>
+      <a th:href="@{/condidate/companies}"  sec:authorize="hasRole('CANDIDATE')" class="nav-link">Companies</a>
+      <a th:href="@{/become-a-company}"  sec:authorize="hasRole('CANDIDATE')" class="nav-link">Become a company</a>
+
+      <a href="/" class="nav-link"  sec:authorize="hasRole('ENTERPRISE')">Dashboard</a>
+      <a th:href="@{/entreprise/joboffers}"  sec:authorize="hasRole('ENTERPRISE')" class="nav-link">My JobOffers</a>
+      <a href="#" class="nav-link"  sec:authorize="hasRole('ENTERPRISE')">Applications</a>
 
       <!-- Show when NOT logged in -->
       <div sec:authorize="isAnonymous()" class="auth-buttons">
@@ -220,9 +224,6 @@
         <div class="field-value" th:text="${#dates.format(user.createdAt, 'dd MMMM yyyy')}"></div>
       </div>
 
-      <a href="#" class="edit-btn">
-        <i class="fas fa-edit"></i> Edit Profile
-      </a>
     </div>
   </div>
 </div>

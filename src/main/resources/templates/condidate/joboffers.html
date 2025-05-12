@@ -339,9 +339,10 @@
 
                     <div class="job-meta">
                         <span class="post-date"><i class="fas fa-clock"></i> <span th:text="${#dates.format(job.datePublication, 'dd MMM yyyy')}">Posted date</span></span>
-                        <a th:href="@{'/job-details/' + ${job.id}}" class="btn-apply">
-                           <i class="fa fa-eye me-2"></i> View Details
+                        <a th:href="@{'/condidate/joboffers/details/' + ${job.id}}" class="btn-apply">
+                            <i class="fa fa-eye me-2"></i> View Details
                         </a>
+
                     </div>
                 </div>
             </div>

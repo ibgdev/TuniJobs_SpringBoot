@@ -1,6 +1,7 @@
 package ibgdev.tunijobs.services;
 
 import ibgdev.tunijobs.entity.Application;
+import ibgdev.tunijobs.entity.User;
 import ibgdev.tunijobs.repository.ApplicationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,5 +46,10 @@ public class ApplicationService implements IApplicationService{
             return applicationRepository.save(a);
         }
         return null;
+    }
+
+    @Override
+    public List<Application> findApplicationsByUser(User user) {
+        return applicationRepository.findApplicationsByUser(user);
     }
 }

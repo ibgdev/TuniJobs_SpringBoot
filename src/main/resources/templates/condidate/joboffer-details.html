@@ -320,6 +320,12 @@
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
                     <li>
+                        <a th:href="@{/condidate/applications}" class="dropdown-item">
+                            <i class="fa-solid fa-shapes me-2"></i>  Applications
+                        </a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
                         <a class="dropdown-item" th:href="@{/profile}">
                             <i class="fas fa-id-badge me-2"></i> My Profile
                         </a>
@@ -349,7 +355,18 @@
 </div>
 
 <main class="job-offer-container">
+
     <!-- Header Section -->
+    <div th:if="${message}" class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+        <i class="fas fa-check-circle me-2"></i>
+        <span th:text="${message}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+        <i class="fas fa-times-circle me-2"></i>
+        <span th:text="${error}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     <header class="offer-header">
         <h1 th:text="${offer.titre}">Senior Java Developer</h1>
         <span class="company-name">
@@ -390,7 +407,7 @@
     </section>
 
     <!-- Apply Button -->
-    <a th:href="@{/candidat/postuler/{offerId}(offerId=${offer.id})}" class="apply-btn" sec:authorize="hasRole('ROLE_CANDIDATE')">
+    <a th:href="@{/condidate/application/{offerId}(offerId=${offer.id})}" class="apply-btn" sec:authorize="hasRole('ROLE_CANDIDATE')">
         <i class="fas fa-paper-plane"></i> Postuler
     </a>
 

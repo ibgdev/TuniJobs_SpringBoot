@@ -63,7 +63,7 @@ public class CompanyController {
     public String showAssignResponsiblePage(@RequestParam("id") Long companyId, Model model) {
         Company company = comapnyService.findCompanyById(companyId);
         model.addAttribute("company", company);
-        model.addAttribute("users", userService.FindUserByRole(Roles.valueOf("CANDIDATE"))); // Load all existing users
+        model.addAttribute("users", userService.FindUserByRole(Roles.valueOf("CANDIDATE")));
         return "company/assign_responsible";
     }
 
@@ -75,5 +75,4 @@ public class CompanyController {
         redirectAttributes.addFlashAttribute("message", "Responsible assigned successfully!");
         return "redirect:/admin/company/retrieve-all-companies";
     }
-
 }

@@ -24,6 +24,9 @@ public class Application implements Serializable {
     @Temporal(TemporalType.DATE)
     @Column(name = "dateApplication")
     private Date createdAt;
+
+    @Column(columnDefinition = "TEXT")
+    private String commentaire;
     
     @ManyToOne
     @JoinColumn(name = "job_offer_id")

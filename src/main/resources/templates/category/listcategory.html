@@ -12,7 +12,7 @@
 <!-- Sidebar -->
 <div class="sidebar">
     <a class="navbar-brand text-white" href="#">
-        <img th:src="@{/images/logoTuni.png}" style="width: 100px" alt="logo">
+        <img th:src="@{/images/logoTuni.png}" style="width: 100px">
     </a>
     <div class="links">
         <a href="/" class="btn">
@@ -24,9 +24,13 @@
         <a th:href="@{/admin/category/retrieve-all-categories}" class="btn active">
             <i class="fas fa-folder-open me-1"></i> Categories
         </a>
+        <a th:href="@{/admin/joboffers/retrieve-all-jobs}" class="btn">
+            <i class="fa-solid fa-user-tie me-1"></i> Job-Offers
+        </a>
         <a th:href="@{/admin/user/retrieve-all-users}" class="btn">
             <i class="fas fa-users me-1"></i> Users
         </a>
+
 
         <!-- Add this logout button -->
         <a href="/logout" class="btn logout-btn">

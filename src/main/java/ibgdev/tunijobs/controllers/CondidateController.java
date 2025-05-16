@@ -140,4 +140,5 @@ public class CondidateController {
         return "condidate/applications";
     }
 
+
 }

@@ -220,7 +220,7 @@
         <div class="nav-links">
             <a href="/" class="nav-link active">Dashboard</a>
             <a th:href="@{/entreprise/joboffers}" class="nav-link">My JobOffers</a>
-            <a href="#" class="nav-link">Applications</a>
+            <a th:href="@{/entreprise/applications}" class="nav-link">Applications</a>
 
 
             <!-- Show when NOT logged in -->
@@ -282,7 +282,7 @@
                 </div>
                 <div class="stat-card">
                     <i class="fas fa-file-alt"></i>
-                    <h3>0</h3>
+                    <h3 th:text="${nbapp}">0</h3>
                     <p>Applications Received</p>
                 </div>
                 <div class="stat-card">
@@ -337,7 +337,7 @@
                             <p th:if="${company.siteWeb != null && !company.siteWeb.isEmpty()}">
                                 <a th:href="${company.siteWeb}" target="_blank" th:text="${company.siteWeb}">www.company.com</a>
                             </p>
-                            <p th:unless="${company.siteWeb != null && !company.siteWeb.isEmpty()}">Not available</p>
+                   •••         <p th:unless="${company.siteWeb != null && !company.siteWeb.isEmpty()}">Not available</p>
                         </div>
                     </div>
 

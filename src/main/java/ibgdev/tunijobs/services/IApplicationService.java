@@ -1,6 +1,7 @@
 package ibgdev.tunijobs.services;
 
 import ibgdev.tunijobs.entity.Application;
+import ibgdev.tunijobs.entity.Company;
 import ibgdev.tunijobs.entity.JobOffer;
 import ibgdev.tunijobs.entity.User;
 
@@ -17,4 +18,8 @@ public interface IApplicationService {
     public Application updateApplication(Long id , Application e);
 
     public  List<Application> findApplicationsByUser(User user);
+
+    public  List<Application> findApplicationsByJobOffer(JobOffer jobOffer);
+
+    public  List<Application> findApplicationsByCompanyId(Company company);
 }

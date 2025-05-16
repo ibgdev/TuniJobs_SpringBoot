@@ -296,6 +296,43 @@
             gap: 0.5rem;
         }
 
+        /* New styles for comment area */
+        .comment-container {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: rgba(76, 201, 240, 0.05);
+            border-radius: 12px;
+            border-left: 4px solid var(--success);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .comment-container h6 {
+            color: var(--dark);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .comment-text {
+            color: var(--gray);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            white-space: pre-line;
+        }
+
+        .comment-container::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            right: 10px;
+            font-size: 5rem;
+            color: rgba(76, 201, 240, 0.1);
+            font-family: Georgia, serif;
+        }
+
         @media (max-width: 768px) {
             .page-header {
                 padding: 3rem 1rem;
@@ -383,9 +420,6 @@
         <i class="far fa-folder-open"></i>
         <h3>No applications yet</h3>
         <p>You haven't applied to any jobs yet. Start browsing job offers to begin your career journey.</p>
-        <a th:href="@{/condidate/joboffers}" class="btn">
-            <i class="fas fa-search me-2"></i> Browse Jobs
-        </a>
     </div>
 
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" th:unless="${listapplications.empty}">
@@ -441,6 +475,14 @@
                             }">
                             <span th:text="${app.statut}">Pending</span>
                         </span>
+                    </div>
+
+                    <!-- Comment area - only shown for approved applications with comments -->
+                    <div class="comment-container" th:if="${app.commentaire != null && !app.commentaire.isEmpty()}">
+                        <h6><i class="fas fa-comment-dots"></i> Feedback from Employer</h6>
+                        <div class="comment-text" th:text="${app.commentaire}">
+                            Your comment will appear here.
+                        </div>
                     </div>
                 </div>
 

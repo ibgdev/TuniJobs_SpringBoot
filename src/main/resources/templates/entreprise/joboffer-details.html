@@ -303,7 +303,7 @@
         <div class="nav-links">
             <a href="/" class="nav-link">Dashboard</a>
             <a th:href="@{/entreprise/joboffers}" class="nav-link active">My JobOffers</a>
-            <a href="#" class="nav-link">Applications</a>
+            <a th:href="@{/entreprise/applications}" class="nav-link">Applications</a>
 
             <div sec:authorize="isAnonymous()" class="auth-buttons">
                 <a th:href="@{/login}" class="btn btn-login">Login</a>

@@ -1,6 +1,8 @@
 package ibgdev.tunijobs.services;
 
 import ibgdev.tunijobs.entity.Application;
+import ibgdev.tunijobs.entity.Company;
+import ibgdev.tunijobs.entity.JobOffer;
 import ibgdev.tunijobs.entity.User;
 import ibgdev.tunijobs.repository.ApplicationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,4 +54,15 @@ public class ApplicationService implements IApplicationService{
     public List<Application> findApplicationsByUser(User user) {
         return applicationRepository.findApplicationsByUser(user);
     }
+
+    @Override
+    public List<Application> findApplicationsByJobOffer(JobOffer jobOffer) {
+        return applicationRepository.findApplicationsByJobOffer(jobOffer);
+    }
+
+    @Override
+    public List<Application> findApplicationsByCompanyId(Company company) {
+        return applicationRepository.findAllByCompanyId(company.getId());
+    }
+
 }

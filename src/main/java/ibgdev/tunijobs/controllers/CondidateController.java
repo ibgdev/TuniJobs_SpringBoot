@@ -103,7 +103,7 @@ public class CondidateController {
         }
 
         // Define upload path
-        String uploadDir = "src/main/resources/static/uploads/applications";
+        String uploadDir = "src/main/resources/static/uploads/applications/";
 
         Files.createDirectories(Paths.get(uploadDir));
 

@@ -46,13 +46,13 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/","/condidate/companies","/login", "/register", "/css/**", "/js/**", "/become-a-company", "/images/**", "/condidate/joboffers").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/entreprise/**").hasRole("ENTERPRISE")// Only ADMINs can access /admin/**
+                        .requestMatchers("/entreprise/**").hasRole("ENTERPRISE")
                         .anyRequest().authenticated()
 
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/home", true)  // redirect based on role in /home controller
+                        .defaultSuccessUrl("/home", true)
                         .permitAll()
                 )
                 .logout(logout -> logout

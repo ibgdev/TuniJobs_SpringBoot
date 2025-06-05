@@ -157,7 +157,7 @@
 
       <a href="/" class="nav-link"  sec:authorize="hasRole('ENTERPRISE')">Dashboard</a>
       <a th:href="@{/entreprise/joboffers}"  sec:authorize="hasRole('ENTERPRISE')" class="nav-link">My JobOffers</a>
-      <a href="#" class="nav-link"  sec:authorize="hasRole('ENTERPRISE')">Applications</a>
+      <a th:href="@{/entreprise/applications}" class="nav-link"  sec:authorize="hasRole('ENTERPRISE')">Applications</a>
 
       <!-- Show when NOT logged in -->
       <div sec:authorize="isAnonymous()" class="auth-buttons">
@@ -171,12 +171,12 @@
           <i class="fas fa-user"></i> <span sec:authentication="name"></span>
         </button>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
-          <li>
-            <a th:href="@{/condidate/applications}" class="dropdown-item">
+          <li sec:authorize="hasRole('CANDIDATE')">
+            <a th:href="@{/condidate/applications}"  class="dropdown-item">
               <i class="fa-solid fa-shapes me-2"></i>  Applications
             </a>
           </li>
-          <li><hr class="dropdown-divider"></li>
+          <li sec:authorize="hasRole('CANDIDATE')"><hr class="dropdown-divider"></li>
           <li>
             <a class="dropdown-item" th:href="@{/profile}">
               <i class="fas fa-id-badge me-2"></i> My Profile
